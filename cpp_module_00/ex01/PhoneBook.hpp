@@ -1,0 +1,26 @@
+#ifndef PHONEBOOK_HPP
+#define PHONEBOOK_HPP
+
+#include "Contact.hpp"
+
+class   PhoneBook {
+
+    private:
+        Contact contacts[7];
+        int i;
+
+        bool        CheckContactIndex(std::string line);
+        int         CheckPlusInNum(std::string line);
+        bool        InvalidInput(std::string line, std::string type);
+        std::string ReadLine(std::string msg, std::string type);
+        void        DisplaySpecificContact();
+
+    public:
+        PhoneBook();
+        Contact GetContact();
+        void    ADD();
+        void    SEARCH();
+        void    EXIT();
+    };
+
+#endif
