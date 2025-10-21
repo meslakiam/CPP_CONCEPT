@@ -6,9 +6,9 @@ PhoneBook::PhoneBook()
     i = 0;
 }
 
-Contact PhoneBook::GetContact()
+Contact PhoneBook::GetContact(int i)
 {
-    return contacts[0];
+    return contacts[i];
 }
 
 void    PhoneBook::ADD()
@@ -24,8 +24,8 @@ void    PhoneBook::ADD()
     NickName = ReadLine("Nick Name", "string");
     DarkestSecret = ReadLine("Darkest Secret", "string");
     PhoneNumber = ReadLine("Phone Number", "number");
-    if(i == 7)
-    i = 0;
+    if(i == 8)
+        i = 0;
     contacts[i].set_contact(FirstName, LastName, NickName, DarkestSecret, PhoneNumber);
     i++;
 }
@@ -34,10 +34,10 @@ void    PhoneBook::ADD()
 {
     int i = 0;
 
-    while (i < 7)
+    while (i < 8)
     {
-        std::cout << GetContact().CYANCOLOR << "Contact: " << i + 1 << GetContact().RESETCOLOR;
-        std::cout << GetContact().YELLOWCOLOR << GetContact().BOLD << " | " << GetContact().RESETCOLOR;
+        std::cout << GetContact(0).CYANCOLOR << "Contact: " << i + 1 << GetContact(0).RESETCOLOR;
+        std::cout << GetContact(0).YELLOWCOLOR << GetContact(0).BOLD << " | " << GetContact(0).RESETCOLOR;
         contacts[i].display_contacts();
         std::cout << std::endl;
         i++;
@@ -47,7 +47,7 @@ void    PhoneBook::ADD()
 
 void    PhoneBook::EXIT()
 {
-    std::cout << GetContact().GREENCOLOR << "exiting successfully" << GetContact().RESETCOLOR << std::endl;
+    std::cout << GetContact(0).GREENCOLOR << "exiting successfully" << GetContact(0).RESETCOLOR << std::endl;
     exit(0);
 }
 
@@ -61,7 +61,7 @@ int PhoneBook::CheckPlusInNum(std::string line)
 bool    PhoneBook::CheckContactIndex(std::string line)
 {
     int     index;
-    Contact C = GetContact();
+    Contact C = GetContact(0);
 
     for(int i = 0; line[i]; i++)
         {
@@ -72,10 +72,8 @@ bool    PhoneBook::CheckContactIndex(std::string line)
             }
         }
     index = std::atoi(line.c_str());
-    if(index <= 0 || index > 7)
+    if(index <= 0 || index > 8)
     {
-        
-
         std::cout << C.REDCOLOR << C.BOLD << "Invalid Index !!" << C.RESETCOLOR << std::endl;
         return (true);
     }
@@ -107,7 +105,7 @@ std::string    PhoneBook::ReadLine(std::string msg, std::string type)
 
     while (InvalidInput(line, type))
     {
-        std::cout << GetContact().MAGENTACOLOR << "Enter " << msg << ": " << GetContact().RESETCOLOR;
+        std::cout << GetContact(0).MAGENTACOLOR << "Enter " << msg << ": " << GetContact(0).RESETCOLOR;
         getline(std::cin, line);
     }
     return (line);
@@ -118,7 +116,7 @@ void    PhoneBook::DisplaySpecificContact()
     std::string UserInput;
     int         index;
 
-    UserInput = ReadLine("Contact Index From [1 to 7]", "index");
+    UserInput = ReadLine("Contact Index From [1 to 8]", "index");
     // .c_str() convert a string to char * by returning the pointer to the first char in  the string 
     index = std::atoi(UserInput.c_str()) - 1;
     contacts[index].display_one_contact();

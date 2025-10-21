@@ -14,22 +14,22 @@ class   Contact {
         std::string PhoneNumber;
 
         void    PrintWord(std::string word, std::string msg);
+        void    PrintLine(std::string word, std::string msg);
 
     public:
-        const char* REDCOLOR;
-        const char* GREENCOLOR;
-        const char* YELLOWCOLOR;
-        const char* BLUECOLOR;
-        const char* MAGENTACOLOR;
-        const char* CYANCOLOR;
-        const char* BOLD;
-        const char* RESETCOLOR;
+        std::string REDCOLOR;
+        std::string GREENCOLOR;
+        std::string YELLOWCOLOR;
+        std::string BLUECOLOR;
+        std::string MAGENTACOLOR;
+        std::string CYANCOLOR;
+        std::string BOLD;
+        std::string RESETCOLOR;
         Contact();
         static bool    CheckPrintChar(std::string line);
-        void    set_contact(std::string SetFirstName, std::string SetLastName , std::string SetNickName, std::string SetDarkestSecret, std::string SetPhoneNumber);
-        void    display_one_contact();
-        void    display_contacts();
-
+        void           set_contact(std::string SetFirstName, std::string SetLastName , std::string SetNickName, std::string SetDarkestSecret, std::string SetPhoneNumber);
+        void           display_one_contact();
+        void           display_contacts();
 };
 
 #endif

@@ -8,7 +8,7 @@ void    ToUpperAndPrint(char *str)
     while (str[i])
     {
         if(isalpha(str[i]) && islower(str[i]))
-            str[i] -= 32;
+            str[i] = toupper(str[i]);
         std::cout << str[i];
         i++;
     }

@@ -6,7 +6,7 @@
 class   PhoneBook {
 
     private:
-        Contact contacts[7];
+        Contact contacts[8];
         int i;
 
         bool        CheckContactIndex(std::string line);
@@ -17,7 +17,7 @@ class   PhoneBook {
 
     public:
         PhoneBook();
-        Contact GetContact();
+        Contact GetContact(int i);
         void    ADD();
         void    SEARCH();
         void    EXIT();

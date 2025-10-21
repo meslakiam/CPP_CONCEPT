@@ -14,6 +14,8 @@ Contact::Contact()
 
 bool Contact::CheckPrintChar(std::string line)
 {
+    if(line.empty())
+        return true;
     for(int i = 0; line[i]; i++)
     {
         if(!isprint(line[i]))
@@ -28,9 +30,7 @@ void   Contact::PrintWord(std::string word, std::string msg)
     
     len = word.length();
     if(len > 10)
-    {
         std::cout << CYANCOLOR << msg << RESETCOLOR << BOLD << word.substr(0, 9) << "." << RESETCOLOR;
-    }
     else
     {
         std::cout << CYANCOLOR << msg << RESETCOLOR << BOLD << word << RESETCOLOR;
@@ -44,7 +44,11 @@ void   Contact::PrintWord(std::string word, std::string msg)
         }
     }
 } 
-    
+void    Contact::PrintLine(std::string word, std::string msg)
+{
+    std::cout << CYANCOLOR << msg << RESETCOLOR << BOLD << word << RESETCOLOR;
+    std::cout << std::endl;
+} 
 void    Contact::set_contact(std::string SetFirstName, std::string SetLastName , std::string SetNickName, std::string SetDarkestSecret, std::string SetPhoneNumber)
 {
     FirstName = SetFirstName;
@@ -56,16 +60,11 @@ void    Contact::set_contact(std::string SetFirstName, std::string SetLastName ,
 
 void    Contact::display_one_contact()
 {
-    PrintWord(FirstName, "First Name: ");
-    std::cout << std::endl;
-    PrintWord(LastName, "Last Name: ");
-    std::cout << std::endl;
-    PrintWord(NickName, "Nick Name: ");
-    std::cout << std::endl;
-    PrintWord(DarkestSecret, "Darkest Secret: ");
-    std::cout << std::endl;
-    PrintWord(PhoneNumber, "Phone Number: ");
-    std::cout << std::endl;
+    PrintLine(FirstName, "First Name: ");
+    PrintLine(LastName, "Last Name: ");
+    PrintLine(NickName, "Nick Name: ");
+    PrintLine(DarkestSecret, "Darkest Secret: ");
+    PrintLine(PhoneNumber, "Phone Number: ");
 }
 
 void    Contact::display_contacts()
