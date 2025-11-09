@@ -31,8 +31,8 @@ int main()
             if(std::cin.eof())
             {
                 std::cin.clear();
-                std::cin.ignore();
-                PrintError("empty line");
+                freopen("/dev/tty","r", stdin);
+                std::cout << std::endl;
             }
         }
         else if(Contact::CheckPrintChar(UserCmd))

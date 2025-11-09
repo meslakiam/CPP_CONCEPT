@@ -49,7 +49,8 @@ void    Contact::PrintLine(std::string word, std::string msg)
     std::cout << CYANCOLOR << msg << RESETCOLOR << BOLD << word << RESETCOLOR;
     std::cout << std::endl;
 } 
-void    Contact::set_contact(std::string SetFirstName, std::string SetLastName , std::string SetNickName, std::string SetDarkestSecret, std::string SetPhoneNumber)
+void    Contact::set_contact(std::string SetFirstName, std::string SetLastName,std::string SetNickName,
+            std::string SetDarkestSecret, std::string SetPhoneNumber)
 {
     FirstName = SetFirstName;
     LastName = SetLastName;

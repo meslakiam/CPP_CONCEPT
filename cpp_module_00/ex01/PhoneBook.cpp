@@ -106,7 +106,15 @@ std::string    PhoneBook::ReadLine(std::string msg, std::string type)
     while (InvalidInput(line, type))
     {
         std::cout << GetContact(0).MAGENTACOLOR << "Enter " << msg << ": " << GetContact(0).RESETCOLOR;
-        getline(std::cin, line);
+        if(!getline(std::cin, line))
+        {
+            if(std::cin.eof())
+            {
+                std::cin.clear();
+                freopen("/dev/tty","r", stdin);
+                std::cout << std::endl;
+            }
+        }
     }
     return (line);
 }
