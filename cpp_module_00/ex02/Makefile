@@ -1,10 +1,11 @@
-NAME = output
+NAME = a.out
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS =  -std=c++98
 
-SRC = main.cpp PhoneBook.cpp Contact.cpp
+
+SRC = tests.cpp Account.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

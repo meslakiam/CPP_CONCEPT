@@ -1,10 +1,10 @@
-NAME = output
+NAME = Moar_Brainz
 
 CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp PhoneBook.cpp Contact.cpp
+SRC = main.cpp zombieHorde.cpp Zombie.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

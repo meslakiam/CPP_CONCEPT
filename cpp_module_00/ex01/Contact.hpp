@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <unistd.h>
+
+
 
 class   Contact {
     private:
@@ -27,7 +28,8 @@ class   Contact {
         std::string RESETCOLOR;
         Contact();
         static bool    CheckPrintChar(std::string line);
-        void           set_contact(std::string SetFirstName, std::string SetLastName , std::string SetNickName, std::string SetDarkestSecret, std::string SetPhoneNumber);
+        void           set_contact(std::string SetFirstName, std::string SetLastName,
+                                    std::string SetNickName, std::string SetDarkestSecret, std::string SetPhoneNumber);
         void           display_one_contact();
         void           display_contacts();
 };

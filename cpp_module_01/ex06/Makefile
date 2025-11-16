@@ -1,10 +1,10 @@
-NAME = output
+NAME = HarlFilter
 
 CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp PhoneBook.cpp Contact.cpp
+SRC = main.cpp  Harl.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

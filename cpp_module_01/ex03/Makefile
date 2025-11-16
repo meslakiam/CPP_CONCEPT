@@ -1,10 +1,10 @@
-NAME = output
+NAME = Unnecessary_violence
 
 CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp PhoneBook.cpp Contact.cpp
+SRC = main.cpp HumanB.cpp HumanA.cpp Weapon.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

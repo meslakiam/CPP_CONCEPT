@@ -1,10 +1,10 @@
-NAME = output
+NAME = Replacer
 
 CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp PhoneBook.cpp Contact.cpp
+SRC = main.cpp FileReplacer.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
