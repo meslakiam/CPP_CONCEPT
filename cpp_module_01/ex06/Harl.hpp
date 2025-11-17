@@ -1,9 +1,8 @@
-#ifndef HARL_HPP 
+#ifndef HARL_HPP
 #define HARL_HPP
 
 #include <iostream>
-#include <string>
-#include <sstream>
+
 
 class   Harl {
 
@@ -12,11 +11,10 @@ class   Harl {
         void    info( void );
         void    warning( void );
         void    error( void );
-        int     GetIndexLevel( std::string level );
+        int     GetIndex( std::string level );
 
     public:
-        void    complain( std::string level );
-
+        void    FilterComplain( std::string level );
 };
 
 #endif

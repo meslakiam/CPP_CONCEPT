@@ -1,37 +1,39 @@
 #include "Harl.hpp"
 
-int    Harl::GetIndexLevel( std::string level )
+int     Harl::GetIndex(std::string level )
 {
-    std::string LevelTable[4] = {
+    std::string table[4] = {
         "DEBUG",
         "INFO",
         "WARNING",
         "ERROR"
     };
-
     for(int i = 0; i < 4; i++)
     {
-        if(LevelTable[i] == level)
+        if(table[i] == level)
             return (i);
     }
     return (-1);
 }
 
-void    Harl::complain( std::string level )
+void    Harl::FilterComplain( std::string level )
 {
-    int num;
-
-    void    (Harl::*talbe[4])() = {
-        &Harl::debug,
-        &Harl::info,
-        &Harl::warning,
-        &Harl::error
-    };
-    num = GetIndexLevel(level);
-    if(num >= 0 && num < 4)
+    int index;
+    
+    index = GetIndex(level);
+    switch (index)
     {
-        Harl H;
-        (H.*talbe[num])();
+        case 0:
+            debug();
+        case 1:
+            info();
+        case 2:
+            warning();
+        case 3:
+            error();
+            break;
+        default :
+            std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
     }
 }
 
