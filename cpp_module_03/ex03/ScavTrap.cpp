@@ -1,25 +1,30 @@
 #include "ScavTrap.hpp"
 
-ScavTrap::ScavTrap() : ClapTrap(100, 50, 20)
+ScavTrap::ScavTrap()
 {
-    std::cout << "Default Constractor called for ScavTrap !!" << std::endl;
+    this->_energyPoint = 50;
+    std::cout << " Default Constractor called for ScavTrap !!" << std::endl;
 }
 
-ScavTrap::ScavTrap(std::string name) : ClapTrap(name)
+ScavTrap::ScavTrap( int energyPoint )
 {
-    this->_hitPoint = 100;
+    this->_energyPoint = energyPoint;
+}
+
+ScavTrap::ScavTrap( std::string name )
+{
+    this->_name = name;
     this->_energyPoint = 50;
-    this->_attackDamage = 20;
     std::cout << "Constractor called for ScavTrap !!" << std::endl;
 }
 
-ScavTrap::ScavTrap(ScavTrap& other) : ClapTrap()
+ScavTrap::ScavTrap( ScavTrap& other ) : ClapTrap()
 {
     std::cout << "copy Constractor called for ScavTrap !!" << std::endl;
     *this = other;
 }
 
-ScavTrap& ScavTrap::operator=(ScavTrap& other)
+ScavTrap& ScavTrap::operator=( ScavTrap& other )
 {
     if(this == &other)
         return ( *this );
@@ -38,7 +43,7 @@ ScavTrap::~ScavTrap()
     std::cout << "Destructor called for ScavTrap !!" << std::endl;
 }
 
-void ScavTrap::guardGate( void )
+void        ScavTrap::guardGate( void )
 {
     std::cout << "ScavTrap is now in Gate keeper mode" << std::endl;
 }

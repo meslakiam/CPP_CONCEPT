@@ -13,10 +13,7 @@ ClapTrap::ClapTrap( std::string name )
 }
 
 ClapTrap::ClapTrap(int hitPoint, int energyPoint, int  attackDamage) 
-    : _name("no name"), _hitPoint(hitPoint), _energyPoint(energyPoint), _attackDamage(attackDamage)
-{
-
-}
+    : _name("no name"), _hitPoint(hitPoint), _energyPoint(energyPoint), _attackDamage(attackDamage) {}
 
 ClapTrap::ClapTrap(ClapTrap& other)
 {
@@ -70,7 +67,7 @@ void        ClapTrap::takeDamage( unsigned int amount )
         std::cout << "ClapTrap " << _name << " is dead !!" << std::endl;
         return ;
     }
-    if(amount < 0 || amount >= 2147483627)
+    if(amount >= 2147483627)
     {
         std::cout << "Invalid Damage Input !!" << std::endl;
         return ;
@@ -99,7 +96,7 @@ void        ClapTrap::beRepaired( unsigned int amount )
         std::cout << "ClapTrap " << _name << " has no energy point to repaired !!" << std::endl;
         return ;
     }
-    if(amount < 0 || amount >= 2147483627)
+    if(amount >= 2147483627)
     {
         std::cout << "Invalid Repaired Input !!" << std::endl;
         return ;

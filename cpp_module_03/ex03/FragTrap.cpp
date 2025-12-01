@@ -1,17 +1,25 @@
 #include "FragTrap.hpp"
 
-FragTrap::FragTrap() : ClapTrap(100, 100, 30)
-{
-    std::cout << "Default Constractor called for FragTrap !!" << std::endl;
-}
-
-FragTrap::FragTrap(std::string name) : ClapTrap(name)
+FragTrap::FragTrap()
 {
     this->_hitPoint = 100;
-    this->_energyPoint = 100;
+    this->_attackDamage = 30;
+    std::cout << " Default Constractor called for FragTrap !!" << std::endl;
+}
+
+FragTrap::FragTrap(int hitPoint,int  attackDamage)
+{
+    this->_hitPoint = hitPoint;
+    this->_attackDamage = attackDamage;
+}
+
+FragTrap::FragTrap(std::string name) 
+{
+    this->_name = name;
+    this->_hitPoint = 100;
     this->_attackDamage = 30;
 
-    std::cout << "Constractor called for FragTrap !!" << std::endl;
+    std::cout << " Constractor called for FragTrap !!" << std::endl;
 }
 
 FragTrap::FragTrap(FragTrap& other) : ClapTrap()
@@ -41,5 +49,5 @@ FragTrap::~FragTrap()
 
 void    FragTrap::highFivesGuys(void)
 {
-    std::cout << "FragTrap High-Five ✋" << std::endl;
+    std::cout << "High-Five ✋" << std::endl;
 }

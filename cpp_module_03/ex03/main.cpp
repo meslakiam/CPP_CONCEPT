@@ -1,19 +1,20 @@
-#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
 void test1()
 {
-    FragTrap player1("ilyas");
+    DiamondTrap player1("ilyas");
 
     player1.attack("player 2");
     player1.takeDamage(5);
     player1.beRepaired(4);
     player1.attack("player 2");
     player1.highFivesGuys();
+    player1.whoAmI();
 }
 
 void test2()
 {
-    FragTrap player1("ilyas");
+    DiamondTrap player1("ilyas");
 
     player1.attack("player 2");
     player1.takeDamage(11);
@@ -21,8 +22,8 @@ void test2()
 
 void test3()
 {
-    FragTrap player1("ilyas");
-    FragTrap player2(player1);
+    DiamondTrap player1("ilyas");
+    DiamondTrap player2(player1);
 
     player2.attack("player 1");
     player2.takeDamage(0);
@@ -34,8 +35,8 @@ void test3()
 
 void test4()
 {
-    FragTrap player1;
-    FragTrap player2("ilyas");
+    DiamondTrap player1;
+    DiamondTrap player2("ilyas");
 
     player1.attack("player 3");
     player1 = player2;
@@ -47,7 +48,7 @@ void test4()
 
 void test5()
 {
-    FragTrap player("ilyas");
+    DiamondTrap player("ilyas");
 
     player.takeDamage(9);
     player.beRepaired(-3);
@@ -58,7 +59,7 @@ void test5()
 
 void test6()
 {
-    FragTrap player("ilyas");
+    DiamondTrap player("ilyas");
 
     player.attack("player 2");
     player.beRepaired(0);
@@ -70,8 +71,8 @@ void test6()
 
 void test7()
 {
-    FragTrap player1;
-    FragTrap player2("ilyas");
+    DiamondTrap player1;
+    DiamondTrap player2("ilyas");
 
     player1.attack("player 3");
     player1 = player2;
@@ -83,7 +84,7 @@ void test7()
 
 void test8()
 {
-    ClapTrap *C = new FragTrap("player 1");
+    ClapTrap *C = new DiamondTrap("player 1");
 
     C->attack("player 2");
     C->takeDamage(30);
@@ -92,7 +93,6 @@ void test8()
 
 int main( void )
 {
-    
     test1();
     // test2();
     // test3();

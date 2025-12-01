@@ -8,6 +8,7 @@ void test1()
     player1.takeDamage(5);
     player1.beRepaired(4);
     player1.attack("player 2");
+    player1.guardGate();
 }
 
 void test2()

@@ -42,6 +42,7 @@ void test4()
         player1.beRepaired(1);
     player1.attack("player 4");
     player1.attack("player 5");
+    player1.takeDamage(2);
 }
 
 void test5()
@@ -53,6 +54,7 @@ void test5()
     player.takeDamage(1);
     player.attack("player 2");
     player.takeDamage(1);
+    player.beRepaired(3);
 }
 
 void test6()
@@ -80,14 +82,24 @@ void test7()
     player1.attack("player 5");
 }
 
+void test8()
+{
+    ClapTrap *C = new ClapTrap("player 1");
+
+    C->attack("player 2");
+    C->takeDamage(30);
+    delete C;
+}
+
 int main( void )
 {
-    
     test1();
     // test2();
     // test3();
     // test4();
     // test5();
+    // test6();
     // test7();
+    // test8();
     return 0;
 }

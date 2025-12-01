@@ -1,19 +1,23 @@
 #include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap() 
-    : _name("no name"), _hitPoint(10), _energyPoint(10), _attackDamage(0)
+    : _name("no name_clap_name"), _hitPoint(10), _energyPoint(10), _attackDamage(0)
 {
-    std::cout << "Default Constractor called for ClapTrap !!" << std::endl;
+    std::cout << " Default Constractor called for CLapTrap !!" << std::endl;
 }
+
 ClapTrap::ClapTrap( std::string name ) 
     :_name(name),  _hitPoint(10) ,  _energyPoint(10), _attackDamage(0)
 {
-    std::cout << "Constractor called for ClapTrap !!" << std::endl;
+    std::cout << " Constractor called for CLapTrap !!"<< std::endl;
 }
+
+ClapTrap::ClapTrap(int hitPoint, int energyPoint, int  attackDamage) 
+    : _name("no name"), _hitPoint(hitPoint), _energyPoint(energyPoint), _attackDamage(attackDamage) {}
 
 ClapTrap::ClapTrap(ClapTrap& other)
 {
-    std::cout << "copy Constractor called for ClapTrap !!" << std::endl;
+    std::cout << "copy Constractor called for CLapTrap !!" << std::endl;
     *this = other;
 }
 
@@ -26,14 +30,14 @@ ClapTrap& ClapTrap::operator=( ClapTrap& other )
     this->_hitPoint = other._hitPoint;
     this->_energyPoint = other._energyPoint;
     this->_attackDamage = other._attackDamage;
-    std::cout << "Copy assignment operator called for ClapTrap !!" << std::endl;
+    std::cout << "Copy assignment operator called for CLapTrap" << std::endl;
 
     return ( *this ); 
 }
 
 ClapTrap::~ClapTrap()
 {
-    std::cout << "Destructor called for ClapTrap !!" << std::endl;
+    std::cout << "Destructor called for CLapTrap !!" << std::endl;
 }
 
 void        ClapTrap::attack( const std::string& target )

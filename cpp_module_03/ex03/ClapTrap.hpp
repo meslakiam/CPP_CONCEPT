@@ -10,6 +10,8 @@ class ClapTrap {
         int                 _hitPoint;
         int                 _energyPoint;
         int                 _attackDamage;
+
+    protected:
         ClapTrap(int hitPoint, int energyPoint,int  attackDamage);
 
     public:
@@ -19,7 +21,7 @@ class ClapTrap {
         ClapTrap& operator=(ClapTrap& other);
         virtual ~ClapTrap();
 
-        virtual void        attack(const std::string& target);
+        void                attack(const std::string& target);
         void                takeDamage(unsigned int amount);
         void                beRepaired(unsigned int amount);
 

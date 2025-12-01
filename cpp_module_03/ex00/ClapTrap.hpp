@@ -11,8 +11,6 @@ class ClapTrap {
         int         _energyPoint;
         int         _attackDamage;
 
-    protected:
-    // ClapTrap(std::string name, int hitPoint, int energyPoint, int attackDamage);
     public:
         ClapTrap();
         ClapTrap(std::string name);
