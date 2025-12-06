@@ -1,4 +1,4 @@
-NAME = Polymorphism
+NAME = Brain
 
 CXX = c++
 

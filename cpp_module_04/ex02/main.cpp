@@ -11,8 +11,11 @@ void test1()
     std::cout << j->getType() << " " << std::endl;
     std::cout << i->getType() << " " << std::endl;
 
-    i->makeSound(); //will output the cat sound!
+    i->makeSound();
     j->makeSound();
+
+    delete i;
+    delete j;
 }
 
 void test2()
@@ -80,10 +83,10 @@ void test6()
 
 int main()
 {
-    // test1();
+    test1();
     // test2();
     // test3();
     // test4();
     // test5();
-    test6();
+    // test6();
 }
