@@ -1,0 +1,34 @@
+#include "Dog.hpp"
+
+Dog::Dog() : Animal()
+{
+    this->_type = "Dog";
+    std::cout << "default constractor called for Dog !!" << std::endl;
+}
+
+Dog::Dog(Dog& other) : Animal()
+{
+    *this = other;
+    std::cout << "copy constractor called for Dog !!" << std::endl;
+}
+
+Dog& Dog::operator=(Dog& other)
+{
+    if( this == &other )
+        return ( *this );
+
+    this->_type = other._type;
+    std::cout << "Copy assignment operator called for Dog" << std::endl;
+
+    return ( *this );
+}
+
+Dog::~Dog()
+{
+    std::cout << "Destructor called for Dog !!" << std::endl;
+}
+
+void Dog::makeSound() const
+{
+    std::cout << "Dog makes sounds " << std::endl;
+}
