@@ -9,7 +9,8 @@ Dog::Dog() : AAnimal()
 
 Dog::Dog(const Dog& other) : AAnimal()
 {
-    *this = other;
+    this->_type = other._type;
+    this->_brain = new Brain(*other._brain);
     std::cout << "copy constractor called for Dog !!" << std::endl;
 }
 
@@ -19,7 +20,7 @@ Dog& Dog::operator=(const Dog& other)
         return ( *this );
 
     this->_type = other._type;
-    this->_brain = new Brain(*other._brain);
+    *this->_brain = *other._brain;
     std::cout << "Copy assignment operator called for Dog" << std::endl;
 
     return ( *this );

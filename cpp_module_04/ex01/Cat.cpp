@@ -9,7 +9,8 @@ Cat::Cat() : Animal()
 
 Cat::Cat(const Cat& other) : Animal()
 {
-    *this = other;
+    this->_type = other._type;
+    this->_brain = new Brain(*other._brain);
     std::cout << "copy constractor called for Cat !!" << std::endl;
 }
 
@@ -19,7 +20,7 @@ Cat& Cat::operator=(const Cat& other)
         return ( *this );
 
     this->_type = other._type;
-    this->_brain = new Brain(*other._brain);
+   *this->_brain = *other._brain;
     std::cout << "Copy assignment operator called for Cat" << std::endl;
 
     return ( *this );

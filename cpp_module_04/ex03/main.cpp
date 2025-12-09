@@ -65,8 +65,7 @@ void test3()
     src->learnMateria(cure);
     delete cure;
 
-    AMateria *c = src->createMateria("Ice");
-    c = src->createMateria("cure");
+    AMateria *c = src->createMateria("cure");;
     std::cout << c->getType() << std::endl;
     delete c;
     c = src->createMateria("ice");
@@ -102,14 +101,18 @@ void test4()
     me->unequip(1);
     me->unequip(2);
     me->unequip(3);
+    me->unequip(4);
     me->unequip(46785);
     me->unequip(-46);
 
     me->use(0,*me);
     me->use(1,*me);
     me->use(2,*me);
+
+    std::cout << "----------" << std::endl;
     ice->use(*me);
     cure->use(*me);
+    std::cout << "----------" << std::endl;
 
     delete materia;
     delete cure;
