@@ -29,14 +29,24 @@ AForm&   AForm::operator=(AForm& other)
 
 AForm::~AForm() {}
 
-bool    AForm::getSign() const
-{
-    return ( this->_isSigned );
-}
-
 std::string const   AForm::getName() const
 {
     return ( this->_name );
+}
+
+int           AForm::getGradeToSign() const
+{
+    return ( this->_gradeToSign );
+}
+
+int           AForm::getGradeToExecute() const
+{
+    return ( this->_gradeToExec );
+}
+
+bool    AForm::getSign() const
+{
+    return ( this->_isSigned );
 }
 
 void    AForm::beSigned(Bureaucrat&  bureaucrat)
@@ -61,4 +71,12 @@ const char*     AForm::GradeTooLowException::what() const throw()
 const char*     AForm::NotSignedException::what() const throw()
 {
     return ( "The Form Not Signed" );
+}
+
+std::ostream&    operator<<(std::ostream& os, AForm& obj)
+{
+    os << "the " << obj.getName() << " Form has grade To Sign: " << obj.getGradeToSign();
+    os << ", and grade to execute: " << obj.getGradeToExecute();
+
+    return ( os );
 }

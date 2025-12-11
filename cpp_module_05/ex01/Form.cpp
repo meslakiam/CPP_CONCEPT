@@ -38,14 +38,24 @@ Form&   Form::operator=(Form& other)
 
 Form::~Form() {}
 
-bool    Form::getSign()
-{
-    return ( this->_signed );
-}
-
-std::string const   Form::getName()
+std::string const   Form::getName() const
 {
     return ( this->_name );
+}
+
+int           Form::getGradeToSign() const
+{
+    return ( this->_gradeToSigned );
+}
+
+int           Form::getGradeToExecute() const
+{
+    return ( this->_gradeToExecute );
+}
+
+bool    Form::getSign() const
+{
+    return ( this->_signed );
 }
 
 void    Form::beSigned(Bureaucrat&  bureaucrat)
@@ -64,4 +74,12 @@ const char*     Form::GradeTooHighException::what() const throw()
 const char*     Form::GradeTooLowException::what() const throw()
 {
     return ( "Grade too low" );
+}
+
+std::ostream&    operator<<(std::ostream& os, Form& obj)
+{
+    os << "the " << obj.getName() << " Form has grade To Sign: " << obj.getGradeToSign();
+    os << ", and grade to execute: " << obj.getGradeToExecute();
+
+    return ( os );
 }

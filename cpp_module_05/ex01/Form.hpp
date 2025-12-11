@@ -18,8 +18,10 @@ class   Form {
         Form&   operator=(Form& other);
         ~Form();
 
-        bool                getSign();
-        std::string const   getName();
+        std::string const   getName() const;
+        bool                getSign() const;
+        int                getGradeToSign() const;
+        int                getGradeToExecute() const;
         void                beSigned( Bureaucrat&   bureaucrat);
 
         class GradeTooHighException : public std::exception {
@@ -32,5 +34,7 @@ class   Form {
             const char*  what() const throw();
         };
 };
+
+std::ostream&    operator<<(std::ostream& os, Form& obj);
 
 #endif

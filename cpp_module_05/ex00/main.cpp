@@ -5,14 +5,14 @@ void    test1()
     try
     {
         std::cout << "----------------------------" << std::endl;
-        Bureaucrat b1("Bureaucrat 1", 2);
+        Bureaucrat b1("bob", 2);
         std::cout << b1 << std::endl;
         std::cout << b1.GetName() << std::endl;
         b1.IncrementGrade(1);
         std::cout << b1 << std::endl;
         std::cout << "----------------------------" << std::endl;
 
-        Bureaucrat b2("Bureaucrat 2", -11);
+        Bureaucrat b2("jon", -11);
         std::cout << b2 << std::endl;
         std::cout << b2.GetName() << std::endl;
         b2.IncrementGrade(1);
@@ -30,7 +30,7 @@ void    test2()
     try
     {
         std::cout << "----------------------------" << std::endl;
-        Bureaucrat b1("Bureaucrat", 150);
+        Bureaucrat b1("bob", 150);
         std::cout << b1 << std::endl;
         b1.IncrementGrade(100);
         std::cout << b1 << std::endl;
@@ -49,7 +49,7 @@ void    test3()
     try
     {
         std::cout << "----------------------------" << std::endl;
-        Bureaucrat b1("Bureaucrat", 1);
+        Bureaucrat b1("jon", 1);
         std::cout << b1 << std::endl;
         std::cout << "----------------------------" << std::endl;
 

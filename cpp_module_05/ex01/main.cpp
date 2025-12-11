@@ -9,10 +9,13 @@ void    test1()
         Bureaucrat b2("jon", 10);
         Form       f1("contract", 10, 7);
 
+        std::cout << f1 << std::endl;
         std::cout << f1.getSign() << std::endl; 
         f1.beSigned(b1);
+        std::cout << f1 << std::endl;
         std::cout << f1.getSign() << std::endl; 
         f1.beSigned(b2);
+        std::cout << f1 << std::endl;
         std::cout << f1.getSign() << std::endl; 
     }
     catch (std::exception& e) {
@@ -31,10 +34,13 @@ void    test2()
         Bureaucrat b2("jon", 10);
         Form       f1("contract", 8, 7);
 
+        std::cout << f1 << std::endl;
         std::cout << f1.getSign() << std::endl; 
         f1.beSigned(b1);
+        std::cout << f1 << std::endl;
         std::cout << f1.getSign() << std::endl; 
         f1.beSigned(b2);
+        std::cout << f1 << std::endl;
         std::cout << f1.getSign() << std::endl; 
     }
     catch (std::exception& e) {
@@ -71,9 +77,9 @@ void    test4()
         Bureaucrat  b2("jon", 5);
         Form        f("contract", 9, 2);
 
-        std::cout << f.getSign() << std::endl;
+        std::cout << f << std::endl;
         f.beSigned(b1);
-        std::cout << f.getSign() << std::endl;
+        std::cout << f << std::endl;
 
         b2.signForm(f);
         b1.signForm(f);
@@ -96,9 +102,9 @@ void    test5()
         Bureaucrat  b2("jon", 5);
         Form        f("contract", 1, 2);
 
-        std::cout << f.getSign() << std::endl;
+        std::cout << f << std::endl;
         f.beSigned(b1);
-        std::cout << f.getSign() << std::endl;
+        std::cout << f << std::endl;
 
         b2.signForm(f);
         b1.signForm(f);
@@ -120,9 +126,9 @@ void    test6()
         Bureaucrat  b2("jon", 5);
         Form        f("contract", 1, 2);
 
-        std::cout << f.getSign() << std::endl;
+        std::cout << f << std::endl;
         f.beSigned(b2);
-        std::cout << f.getSign() << std::endl;
+        std::cout << f << std::endl;
 
         b2.signForm(f);
         b1.signForm(f);
