@@ -2,11 +2,21 @@
 #define SCALARCONVERTER_HPP 
 
 #include <iostream>
-#include <exception>
-#include <sstream>
 #include <cstdlib>
+#include <climits>
+#include <cfloat>
+#include <cmath>
 #include <iomanip>
 
+typedef enum Type {
+
+    Char,
+    Int,
+    Float,
+    Double,
+    Pseudo,
+    Invalid
+} Type;
 
 class   ScalarConverter {
 
@@ -16,33 +26,29 @@ class   ScalarConverter {
         ScalarConverter&    operator=(ScalarConverter& other);
         ~ScalarConverter();
 
-        static bool     IsFloatNum(std::string& literal);
-        static bool     IsDoubleNum(std::string& literal);
-        static char     IsChar(std::string& literal, int i);
+        static Type     GetOrigineType(std::string& literal);
+        static void     InvalideType();
 
-        static char    ConvertToCHAR(std::string& literal);
-        static int     ConvertToINT(std::string& literal);
-        static float   ConvertToFLOAT(std::string& literal);
-        static double  ConvertToDOUBLE(std::string& literal);
-        static bool    ConvertToPseudo(std::string& literal);
+        static bool     IsChar(std::string& literal);
+        static bool     IsInt(std::string& literal);
+        static bool     IsFloat(std::string& literal);
+        static bool     IsDouble(std::string& literal);
 
-        static void    PrintToOutput(char c, int num, float numf, double numd, std::string* error);
+        static bool         CheckChar(long long c);
+        static bool         CheckInt(long long num);
+        static bool         CheckFloat(double numf);
+        static bool         CheckDouble(double numd);
+
+        static void         ConvertToCHAR(std::string& literal);
+        static void         ConvertToINT(std::string& literal);
+        static void         ConvertToFLOAT(std::string& literal);
+        static void         ConvertToDOUBLE(std::string& literal);
+        static bool         ConvertToPseudo(std::string& literal);
 
     public:
 
         static void convert(std::string& literal);
 
-        class ERRORMSG : public std::exception {
-            private:
-                std::string _errorMsg;
-            
-            public:
-                ERRORMSG(std::string errorMsg);
-                virtual ~ERRORMSG() throw() {};
-                const char* what() const throw();
-        };
-
 };
-
 
 #endif
