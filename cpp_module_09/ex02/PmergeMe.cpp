@@ -74,7 +74,9 @@ std::vector<int> PmergeMe::JacobSequenceIndexes(size_t size)
     if (size <= 1)
         return jacob;
 
-    std::vector<int> seq = {0, 1};
+    std::vector<int> seq;
+    seq.push_back(0);
+    seq.push_back(1);
     while (true)
     {
         int next = seq.back() + 2 * seq[seq.size() - 2];

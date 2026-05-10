@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <stdexcept>
+#include <cerrno>
 #include <utility>
 #include <vector>
 #include <deque>

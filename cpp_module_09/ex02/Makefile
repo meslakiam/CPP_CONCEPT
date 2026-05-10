@@ -2,7 +2,7 @@ NAME = PmergeMe
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror 
+CXXFLAGS = -Wall -Wextra -Werror  -std=c++98
 
 SRC = main.cpp PmergeMe.cpp dquePmergeMe.cpp
 
@@ -11,7 +11,7 @@ OBJ = $(SRC:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGES) $(OBJ) -o $(NAME) -g
+	$(CXX) $(CXXFLAGES) $(OBJ) -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)
