@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "C++ Debug (GDB)",
+          "type": "cppdbg",
+          "request": "launch",
+          "program": "/home/imeslaki/Desktop/CPP_CONCEPT/cpp_module_09/ex02/PmergeMe",
+          "args": ["12", "5", "435", "4", "23", "68", "89", "3", "67", "7", "0", "2", "6", "15", "32", "20"],
+          "stopAtEntry": false,
+          "cwd": "/home/imeslaki/Desktop/CPP_CONCEPT/cpp_module_09/ex02",
+          "externalConsole": false,
+          "MIMode": "gdb",
+          "miDebuggerPath": "/usr/bin/gdb",
+          "preLaunchTask": "build",
+          "setupCommands": [
+              {
+                  "description": "Enable pretty-printing for gdb",
+                  "text": "-enable-pretty-printing",
+                  "ignoreFailures": true
+              }
+          ]
+      }
+  ]
+}

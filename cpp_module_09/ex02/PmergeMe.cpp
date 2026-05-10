@@ -9,19 +9,37 @@ void    print(std::vector<Int>& v)
 
     for (size_t i = 0; i < v.size(); i++)
     {
-        std::cout << v[i] << " , ";
+        std::cout << v[i] << ", ";
     }
     std::cout << "\n";
     
 }
+
+std::vector<Int>& PmergeMe::getnums()
+{
+    return v_nums;
+}
+
+void PmergeMe::setNums(std::vector<Int>& v_args)
+{
+    v_nums  = v_args;
+}
+
 PmergeMe::PmergeMe(std::vector<std::string> v_str)
 {
     for (size_t i = 0; i < v_str.size(); i++)
     {
-        int n = std::stoi(v_str[i]);
-        if (n < 0)
+        char * end;
+        errno = 0;
+        long n = strtol(v_str[i].c_str(),&end, 10);
+        if ( *end != '\0' )
+            throw std::runtime_error("non-digit character detected !!");
+        if ( errno == ERANGE || n > 2147483647 )
+            throw std::out_of_range(("number out_of_range !!"));
+        if ( n < 0 )
             throw std::runtime_error("negative number detected !!");
-        v_nums.push_back(Int(n));
+
+        v_nums.push_back(Int((int)n));
     }
 }
 
@@ -32,10 +50,7 @@ void PmergeMe::sort()
     std::cout << "~~~~~~~~~~~~~~~~~\n" ;
     algorithm(v_nums);
     std::cout << "\\\\\\\\\\\\\\\\\\\\\\\\\\RESULT\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n";
-    for (size_t i = 0; i < v_nums.size(); i++)
-    {
-        std::cout << " ," << v_nums[i] ;
-    }
+    print(v_nums);
     std::cout << "\n" << "comparison count = " << v_nums[0].Count << " \n";
     
 }
@@ -96,11 +111,7 @@ void PmergeMe::orderedThePair(std::vector<Int>& v_largeNums, std::vector<Int>& v
                                std::vector<Int>& v_smallOrderedPaire)
 {
     // std::cout << "**************returned large num in recursion**********\n" ;
-    // for (size_t i = 0; i < v_largeNums.size(); i++)
-    // {
-    //     std::cout << " ', "  << v_largeNums[i].value;
-    // }
-    // std::cout << "\n";
+    // print(v_largeNums);
     
     // std::cout << "********************************************************\n" ;
 
@@ -115,7 +126,14 @@ void PmergeMe::orderedThePair(std::vector<Int>& v_largeNums, std::vector<Int>& v
         v_smallOrderedPaire.push_back(*it);
         v_smallNums.erase(it);
     }
-    // std::cout << "=========v_smallOrderedPaire after orderd them=========\n" ;
+    if ( !v_smallNums.empty() )
+    {
+        v_smallOrderedPaire.push_back(v_smallNums.back());
+        v_smallNums.erase(v_smallNums.end() - 1);
+
+    }
+    
+    std::cout << "=========v_smallOrderedPaire after orderd them=========\n" ;
     // for (size_t i = 0; i < v_smallOrderedPaire.size() && i < v_largeNums.size(); i++)
     // {
     //     std::cout  << " large: " << v_largeNums[i].value << " large index: " << v_largeNums[i].index.back();
@@ -126,8 +144,9 @@ void PmergeMe::orderedThePair(std::vector<Int>& v_largeNums, std::vector<Int>& v
     //         std::cout  << v_smallOrderedPaire[i].index.back() << " | " ;
     // }
     // std::cout << "\n";
-
-    // std::cout << "=======================================================\n" ;
+    print(v_largeNums);
+    print(v_smallOrderedPaire);
+    std::cout << "=======================================================\n" ;
 }
 
 
@@ -148,25 +167,19 @@ void PmergeMe::insertion(std::vector<Int>& v_largeNums, std::vector<Int>& v_smal
     for (int i = 0; i < (int)jacob.size(); i++)
     {
         int curr = jacob[i];
-        if (curr >= (int)v_largeNums.size())
-            curr = (int)v_largeNums.size() - 1;
+        if (curr >= (int)v_smallOrderedPaire.size())
+            curr = (int)v_smallOrderedPaire.size() - 1;
 
         for (int j = prevJacob; j < curr; j++)
             v_mainChain.push_back(v_largeNums[j]);
 
         // Walk backwards inserting b's with lower_bound up to paired a
-        for (int j = curr - 1; j >= prevJacob; j--)
+        for (int j = curr ; j > prevJacob; j--)
         {
             if (j == 0)
                 continue;
             if (j >= (int)v_smallOrderedPaire.size())
                 continue;
-
-            // // upper bound = position of paired a_j in chain
-            // std::vector<Int>::iterator upper = std::find_if(
-            //     v_mainChain.begin(), v_mainChain.end(),
-            //     [&](const Int& x){ return x.value == v_largeNums[j].value; });
-
 
             std::vector<Int>::iterator it = std::lower_bound(
                 v_mainChain.begin(), v_mainChain.end(), v_smallOrderedPaire[j]);
@@ -184,22 +197,13 @@ void PmergeMe::insertion(std::vector<Int>& v_largeNums, std::vector<Int>& v_smal
     {
         if (j == 0)
             continue;
-        // std::vector<Int>::iterator upper = std::find_if(
-        //     v_mainChain.begin(), v_mainChain.end(),
-        //     [&](const Int& x){ return x.value == v_largeNums[j].value; });
 
         std::vector<Int>::iterator it = std::lower_bound(
             v_mainChain.begin(), v_mainChain.end(), v_smallOrderedPaire[j]);
         v_mainChain.insert(it, v_smallOrderedPaire[j]);
     }
 
-    // Insert unpaired odd element (leftover from PairwiseComparison)
-    for (size_t k = 0; k < v_smallNums.size(); k++)
-    {
-        std::vector<Int>::iterator it = std::lower_bound(
-            v_mainChain.begin(), v_mainChain.end(), v_smallNums[k]);
-        v_mainChain.insert(it, v_smallNums[k]);
-    }
+    
 
     v_largeNums.clear();
     v_largeNums = v_mainChain;
@@ -230,7 +234,7 @@ void PmergeMe::algorithm(std::vector<Int>& v_largeNums)
     
     lvl--;
     std::cout << "~~~~~~~~after~~~~~~~~~\n" ;
-    std::cout << "LEVEL = " << lvl++ << "\n";
+    std::cout << "LEVEL = " << lvl << "\n";
     print(v_largeNums);
     print(v_smallNums);
     std::cout << "~~~~~~~~~~~~~~~~~\n" ;

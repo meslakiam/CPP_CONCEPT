@@ -47,7 +47,7 @@ class PmergeMe {
 
     std::vector<Int> v_nums;
     
-    PmergeMe();
+    // PmergeMe();
     void    PairwiseComparison(std::vector<Int>& v_largeNums, std::vector<Int>& v_smallNums);
     void    insertion(std::vector<Int>& v_largeNums, std::vector<Int>& v_smallNums);
     void    orderedThePair(std::vector<Int>& v_largeNums, std::vector<Int>& v_smallNums, std::vector<Int>& v_orderedPaire);
@@ -56,8 +56,11 @@ class PmergeMe {
 
     public:
         PmergeMe(std::vector<std::string> v_str);
+        PmergeMe();
         void    algorithm(std::vector<Int>& v_largeNums);
         void sort();
+        void setNums(std::vector<Int>& v_args);
+        std::vector<Int>& getnums();
 };
 
 

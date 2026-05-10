@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "/home/imeslaki/Desktop/CPP_CONCEPT/cpp_module_09/ex02/main.cpp",
+                "/home/imeslaki/Desktop/CPP_CONCEPT/cpp_module_09/ex02/PmergeMe.cpp",
+                "-o",
+                "/home/imeslaki/Desktop/CPP_CONCEPT/cpp_module_09/ex02/PmergeMe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}
