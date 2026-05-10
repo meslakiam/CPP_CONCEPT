@@ -104,9 +104,8 @@ void GeneralTest(int numberOfItems, int numberOfTests = 1000000, int skip = 0)
 		struct timeval tv, tv2;
 		Int::Count = 0;
 		gettimeofday(&tv, NULL);
-        obj.setNums(numsToSort);
-		obj.sort();
-        numsToSort = obj.getnums();
+		obj.sort(numsToSort);
+        numsToSort = obj.getVectorNums();
 		gettimeofday(&tv2, NULL);
 		
 
@@ -151,7 +150,26 @@ void GeneralTest(int numberOfItems, int numberOfTests = 1000000, int skip = 0)
 	}
 }
 
+void	printResulte(std::deque<Int>& dq_nums, std::string str)
+{
+	std::cout << str << ": " ;
+	for (size_t i = 0; i < dq_nums.size(); i++)
+	{
+		std::cout << dq_nums[i] << " " ;
+	}
+	std::cout << std::endl;
+	
+}
 
+void	printResulte(std::vector<Int>& v_nums, std::string str)
+{
+	std::cout << str << ": " ;
+	for (size_t i = 0; i < v_nums.size(); i++)
+	{
+		std::cout << v_nums[i] << " " ;
+	}
+	std::cout << std::endl;
+}
 int main(int argc, char const *argv[])
 {
 
@@ -166,10 +184,32 @@ int main(int argc, char const *argv[])
         v_args.push_back(argv[i]);
     try
     {
-        int n = 21;
-		GeneralTest(n, 1000000, 10);
-        // PmergeMe   p(v_args);
-        // p.sort();
+        // int n = 3000;
+		// GeneralTest(n, 1000000, 10);
+		std::deque<std::string> dq_args(v_args.begin(), v_args.end());
+
+        PmergeMe	v_algo(v_args);
+	
+		printResulte(v_algo.getVectorNums(), "vector befor");
+		v_algo.initTime();
+
+        v_algo.sort(v_algo.getVectorNums());
+	
+		std::cout << "time of sorting a vector = " << v_algo.timeOfSorting() << "ms\n";
+		printResulte(v_algo.getVectorNums(), "vector after");
+
+		std::cout << "\n==================================================\n\n";
+		PmergeMe	dq_algo(dq_args);
+
+		v_algo.initTime();
+
+		printResulte(dq_algo.getDequeNums(), "deque befor");
+
+		dq_algo.sort(dq_algo.getDequeNums());
+
+		std::cout << "time of sorting a deque = " << v_algo.timeOfSorting() << "ms\n";
+		printResulte(dq_algo.getDequeNums(), "deque after");
+
  
     }
     catch(const std::exception& e)

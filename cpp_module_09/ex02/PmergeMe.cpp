@@ -1,29 +1,9 @@
 #include "PmergeMe.hpp"
 
 int Int::Count = 0;
+clock_t PmergeMe::g_startTime = 0;
 
 PmergeMe::PmergeMe() {}
-void    print(std::vector<Int>& v)
-{
-    std::cout << "------------------------------------------" << "\n";
-
-    for (size_t i = 0; i < v.size(); i++)
-    {
-        std::cout << v[i] << ", ";
-    }
-    std::cout << "\n";
-    
-}
-
-std::vector<Int>& PmergeMe::getnums()
-{
-    return v_nums;
-}
-
-void PmergeMe::setNums(std::vector<Int>& v_args)
-{
-    v_nums  = v_args;
-}
 
 PmergeMe::PmergeMe(std::vector<std::string> v_str)
 {
@@ -38,20 +18,20 @@ PmergeMe::PmergeMe(std::vector<std::string> v_str)
             throw std::out_of_range(("number out_of_range !!"));
         if ( n < 0 )
             throw std::runtime_error("negative number detected !!");
+        std::vector<Int>::iterator it = std::find(v_nums.begin(), v_nums.end(),Int(n));
+        if ( it != v_nums.end() )
+            throw std::runtime_error("duplicated number detected !!");
 
         v_nums.push_back(Int((int)n));
     }
 }
 
-void PmergeMe::sort()
+void PmergeMe::sort(std::vector<Int>& v_nums)
 {
-    std::cout << "~~~~~~~~first~~~~~~~~~\n" ;
-    print(v_nums);
-    std::cout << "~~~~~~~~~~~~~~~~~\n" ;
+    if (v_nums.empty())
+        return;
+
     algorithm(v_nums);
-    std::cout << "\\\\\\\\\\\\\\\\\\\\\\\\\\RESULT\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n";
-    print(v_nums);
-    std::cout << "\n" << "comparison count = " << v_nums[0].Count << " \n";
     
 }
 
@@ -78,6 +58,7 @@ void PmergeMe::PairwiseComparison(std::vector<Int>& v_largeNums, std::vector<Int
     }
     v_largeNums = v_tmpNumbers;
 }
+
 void PmergeMe::mapThePairs(std::vector<Int>& v_largeNums, std::vector<Int>& v_smallNums)
 {
     for (size_t i = 0; i < v_largeNums.size(); i++)
@@ -87,7 +68,7 @@ void PmergeMe::mapThePairs(std::vector<Int>& v_largeNums, std::vector<Int>& v_sm
 }
 
 // Real Jacobsthal sequence: J(n) = J(n-1) + 2*J(n-2)
-std::vector<int> JacobSequenceIndexes(size_t size)
+std::vector<int> PmergeMe::JacobSequenceIndexes(size_t size)
 {
     std::vector<int> jacob;
     if (size <= 1)
@@ -133,7 +114,7 @@ void PmergeMe::orderedThePair(std::vector<Int>& v_largeNums, std::vector<Int>& v
 
     }
     
-    std::cout << "=========v_smallOrderedPaire after orderd them=========\n" ;
+    // std::cout << "=========v_smallOrderedPaire after orderd them=========\n" ;
     // for (size_t i = 0; i < v_smallOrderedPaire.size() && i < v_largeNums.size(); i++)
     // {
     //     std::cout  << " large: " << v_largeNums[i].value << " large index: " << v_largeNums[i].index.back();
@@ -144,9 +125,9 @@ void PmergeMe::orderedThePair(std::vector<Int>& v_largeNums, std::vector<Int>& v
     //         std::cout  << v_smallOrderedPaire[i].index.back() << " | " ;
     // }
     // std::cout << "\n";
-    print(v_largeNums);
-    print(v_smallOrderedPaire);
-    std::cout << "=======================================================\n" ;
+    // print(v_largeNums);
+    // print(v_smallOrderedPaire);
+    // std::cout << "=======================================================\n" ;
 }
 
 
@@ -161,6 +142,14 @@ void PmergeMe::insertion(std::vector<Int>& v_largeNums, std::vector<Int>& v_smal
     v_mainChain.push_back(v_smallOrderedPaire[0]);
 
     std::vector<int> jacob = JacobSequenceIndexes(v_largeNums.size());
+    
+    // std::cout << "++++++++++++++++jacob_sequence+++++++++++++++++\n";
+
+    // for (size_t i = 0; i < jacob.size(); i++)
+    // {
+    //     std::cout << jacob[i] << ", ";
+    // }
+    // std::cout << "\n+++++++++++++++++++++++++++++++++++++++++++++\n";
 
     int prevJacob = 0;
 
@@ -203,12 +192,11 @@ void PmergeMe::insertion(std::vector<Int>& v_largeNums, std::vector<Int>& v_smal
         v_mainChain.insert(it, v_smallOrderedPaire[j]);
     }
 
-    
-
     v_largeNums.clear();
     v_largeNums = v_mainChain;
 }
-static int lvl;
+
+// static int lvl;
 void PmergeMe::algorithm(std::vector<Int>& v_largeNums)
 {
     std::vector<Int> v_smallNums;
@@ -216,28 +204,42 @@ void PmergeMe::algorithm(std::vector<Int>& v_largeNums)
     if (v_largeNums.size() == 1)
         return;
 
-
     PairwiseComparison(v_largeNums, v_smallNums);
     mapThePairs(v_largeNums, v_smallNums);
-    std::cout << "~~~~~~~~befor~~~~~~~~~\n" ;
-    std::cout << "LEVEL = " << lvl++ << "\n";
-    print(v_largeNums);
-    print(v_smallNums);
-    std::cout << "~~~~~~~~~~~~~~~~~\n" ;
+
     algorithm(v_largeNums);
+
     insertion(v_largeNums, v_smallNums);
     for (size_t i = 0; i < v_largeNums.size(); i++)
     {
         if (!v_largeNums[i].index.empty())
             v_largeNums[i].index.pop_back();
     }
-    
-    lvl--;
-    std::cout << "~~~~~~~~after~~~~~~~~~\n" ;
-    std::cout << "LEVEL = " << lvl << "\n";
-    print(v_largeNums);
-    print(v_smallNums);
-    std::cout << "~~~~~~~~~~~~~~~~~\n" ;
+}
+
+
+
+// Initialize the timer
+void PmergeMe::initTime()
+{
+    g_startTime = clock();
+}
+
+double PmergeMe::timeOfSorting()
+{
+    clock_t endTime = clock();
+    double time = double(endTime - g_startTime) / CLOCKS_PER_SEC * 1000.0;
+    return time;
+}
+
+std::vector<Int>& PmergeMe::getVectorNums()
+{
+    return v_nums;
+}
+
+void PmergeMe::setNums(std::vector<Int>& v_args)
+{
+    v_nums  = v_args;
 }
 
 std::ostream& operator<<(std::ostream& os, Int& obj)
@@ -245,3 +247,4 @@ std::ostream& operator<<(std::ostream& os, Int& obj)
     os << obj.value;
     return os;
 }
+
