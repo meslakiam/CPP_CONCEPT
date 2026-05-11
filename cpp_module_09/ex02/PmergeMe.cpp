@@ -1,7 +1,7 @@
 #include "PmergeMe.hpp"
 
 int Int::Count = 0;
-clock_t PmergeMe::g_startTime = 0;
+clock_t PmergeMe::_g_startTime = 0;
 
 PmergeMe::PmergeMe() {}
 
@@ -18,20 +18,38 @@ PmergeMe::PmergeMe(std::vector<std::string> v_str)
             throw std::out_of_range(("number out_of_range !!"));
         if ( n < 0 )
             throw std::runtime_error("negative number detected !!");
-        std::vector<Int>::iterator it = std::find(v_nums.begin(), v_nums.end(),Int(n));
-        if ( it != v_nums.end() )
+        std::vector<Int>::iterator it = std::find(_v_nums.begin(), _v_nums.end(),Int(n));
+        if ( it != _v_nums.end() )
             throw std::runtime_error("duplicated number detected !!");
 
-        v_nums.push_back(Int((int)n));
+        _v_nums.push_back(Int((int)n));
     }
 }
 
-void PmergeMe::sort(std::vector<Int>& v_nums)
+void print(std::vector<Int> v)
 {
-    if (v_nums.empty())
+    std::cout << "\n------------------------------\n";
+    for (size_t i = 0; i < v.size(); i++)
+    {
+        std::cout << v[i] << " ";
+    }
+    
+    std::cout << "\n------------------------------\n";
+}
+
+void PmergeMe::sort(std::vector<Int>& nums)
+{
+    if (nums.empty())
         return;
 
-    algorithm(v_nums);
+    std::cout << "non sorted\n";
+
+    print(nums);
+    algorithm(nums);
+    _v_nums = nums;
+    std::cout << "sorted\n";
+
+    print(nums);
     
 }
 
@@ -113,7 +131,6 @@ void PmergeMe::orderedThePair(std::vector<Int>& v_largeNums, std::vector<Int>& v
     {
         v_smallOrderedPaire.push_back(v_smallNums.back());
         v_smallNums.erase(v_smallNums.end() - 1);
-
     }
     
     // std::cout << "=========v_smallOrderedPaire after orderd them=========\n" ;
@@ -132,8 +149,15 @@ void PmergeMe::orderedThePair(std::vector<Int>& v_largeNums, std::vector<Int>& v
     // std::cout << "=======================================================\n" ;
 }
 
+std::vector<Int>::iterator findIndex(std::vector<Int>& v_largeNums, std::vector<Int>& v_mainChain, Int& v_smallOrderedPaire)
+{
+    int index = v_smallOrderedPaire.index.back();
+    std::vector<Int>::iterator it = std::find(v_largeNums.begin(), v_largeNums.end(), v_largeNums[index]);
+    if ( it == v_largeNums.end() )
+        it  = v_mainChain.end();
+    return it;
 
-
+}
 void PmergeMe::insertion(std::vector<Int>& v_largeNums, std::vector<Int>& v_smallNums)
 {
     std::vector<Int> v_mainChain;
@@ -144,7 +168,7 @@ void PmergeMe::insertion(std::vector<Int>& v_largeNums, std::vector<Int>& v_smal
     v_mainChain.push_back(v_smallOrderedPaire[0]);
 
     std::vector<int> jacob = JacobSequenceIndexes(v_largeNums.size());
-    
+
     // std::cout << "++++++++++++++++jacob_sequence+++++++++++++++++\n";
 
     // for (size_t i = 0; i < jacob.size(); i++)
@@ -153,7 +177,7 @@ void PmergeMe::insertion(std::vector<Int>& v_largeNums, std::vector<Int>& v_smal
     // }
     // std::cout << "\n+++++++++++++++++++++++++++++++++++++++++++++\n";
 
-    int prevJacob = 0;
+    int prevJacob = 0; 
 
     for (int i = 0; i < (int)jacob.size(); i++)
     {
@@ -171,7 +195,7 @@ void PmergeMe::insertion(std::vector<Int>& v_largeNums, std::vector<Int>& v_smal
                 continue;
             if (j >= (int)v_smallOrderedPaire.size())
                 continue;
-
+            // std::vector<Int>::iterator upper = findIndex(v_largeNums, v_mainChain, v_smallOrderedPaire[j]);
             std::vector<Int>::iterator it = std::lower_bound(
                 v_mainChain.begin(), v_mainChain.end(), v_smallOrderedPaire[j]);
             v_mainChain.insert(it, v_smallOrderedPaire[j]);
@@ -224,24 +248,24 @@ void PmergeMe::algorithm(std::vector<Int>& v_largeNums)
 // Initialize the timer
 void PmergeMe::initTime()
 {
-    g_startTime = clock();
+    _g_startTime = clock();
 }
 
 double PmergeMe::timeOfSorting()
 {
     clock_t endTime = clock();
-    double time = double(endTime - g_startTime) / CLOCKS_PER_SEC * 1000.0;
+    double time = double(endTime - _g_startTime) / CLOCKS_PER_SEC * 1000.0;
     return time;
 }
 
 std::vector<Int>& PmergeMe::getVectorNums()
 {
-    return v_nums;
+    return _v_nums;
 }
 
 void PmergeMe::setNums(std::vector<Int>& v_args)
 {
-    v_nums  = v_args;
+    _v_nums = v_args;
 }
 
 std::ostream& operator<<(std::ostream& os, Int& obj)

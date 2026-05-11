@@ -13,20 +13,20 @@ PmergeMe::PmergeMe(std::deque<std::string>  dq_str)
             throw std::out_of_range(("number out_of_range !!"));
         if ( n < 0 )
             throw std::runtime_error("negative number detected !!");
-        std::deque<Int>::iterator it = std::find(dq_nums.begin(), dq_nums.end(),Int(n));
-        if ( it != dq_nums.end() )
+        std::deque<Int>::iterator it = std::find(_dq_nums.begin(), _dq_nums.end(),Int(n));
+        if ( it != _dq_nums.end() )
             throw std::runtime_error("duplicated number detected !!");
 
-        dq_nums.push_back(Int((int)n));
+        _dq_nums.push_back(Int((int)n));
     }
 }
 
-void PmergeMe::sort(std::deque<Int>&  dq_nums)
+void PmergeMe::sort(std::deque<Int>&  _dq_nums)
 {
-    if (dq_nums.empty())
+    if (_dq_nums.empty())
         return;
 
-    algorithm(dq_nums);
+    algorithm(_dq_nums);
 }
 
 void PmergeMe::algorithm(std::deque<Int>& dq_largeNums)
@@ -167,11 +167,11 @@ void PmergeMe::insertion(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smal
 
 std::deque<Int>& PmergeMe::getDequeNums()
 {
-    return dq_nums;
+    return _dq_nums;
 }
 
 void PmergeMe::setNums(std::deque<Int>& dq_args)
 {
-    dq_nums  = dq_args;
+    _dq_nums  = dq_args;
 }
 

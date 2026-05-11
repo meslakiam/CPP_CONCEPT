@@ -47,9 +47,9 @@ std::ostream&    operator<<(std::ostream& os, Int& obj);
 
 class PmergeMe {
 
-    std::vector<Int> v_nums;
-    std::deque<Int>  dq_nums;
-    static clock_t g_startTime;
+    std::vector<Int> _v_nums;
+    std::deque<Int>  _dq_nums;
+    static clock_t _g_startTime;
 
     std::vector<int> JacobSequenceIndexes(size_t size);
     void    PairwiseComparison(std::vector<Int>& v_largeNums, std::vector<Int>& v_smallNums);
@@ -69,12 +69,12 @@ class PmergeMe {
         PmergeMe();
     
         void    algorithm(std::vector<Int>& v_largeNums);
-        void    sort(std::vector<Int>& v_nums);
+        void    sort(std::vector<Int>& _v_nums);
         void    setNums(std::vector<Int>& v_args);
         std::vector<Int>& getVectorNums();
 
         void    algorithm(std::deque<Int>& dq_largeNums);
-        void    sort(std::deque<Int>&  dq_nums);
+        void    sort(std::deque<Int>&  _dq_nums);
         void    setNums(std::deque<Int>& dq_args);
         std::deque<Int>& getDequeNums();
 
