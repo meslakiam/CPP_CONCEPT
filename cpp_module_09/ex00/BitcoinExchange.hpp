@@ -7,33 +7,36 @@
 #include <bits/stdc++.h>
 #include <map>
 
-class fmanager {
+#include "FileManager.hpp"
 
-    std::ifstream *_file;
-    std::pair<std::string, float>    parseLine(std::string& date,std::string& value);
-    void        validateDate(std::string& date);
-    void        validateValue(std::string& value);
-    void        validateLeepDay(long year, long month, long day);
-    public:
-        fmanager();
-        void openFile(std::string fileName);
-        std::pair<std::string, float> getNextLine();
-};
+
+typedef std::map<string,float> Map;
 
 class btc {
-
     private:
-        std::map<std::string,float> _map;
-        fmanager    _inputFile;
-        const std::string& _fileName;
+        Map             _m_dataBase;
+        Map             _m_inputData;
+        fmanager        _inputFile;
+        string          _fileName;
 
-
+        void    fillDataBase();
+        btc( btc& other );
+        btc&  operator=( btc& other);
 
     public:
-        btc(const std::string& file);
-        // btc();
+        btc();
+        btc( string& file);
+        
+        ~btc();
 
+        void    fillInputData();
+        void    fillInputData(string& fileName);
 
+        void    calculePrice(LineResult res);
+
+        Map getDB();
+        string& getFileName();
+        Map getInputData();
 };
 
 #endif

@@ -1,93 +1,93 @@
 #include "BitcoinExchange.hpp"
 
-fmanager::fmanager() {}
-
-void     fmanager::openFile(std::string fileName)
+btc::btc()
 {
-    std::ifstream f(fileName);
-
-    if ( !f.is_open())
-        throw std::runtime_error("cannot open file");
-
-   this->_file = &f;
+    fillDataBase();
 }
 
-void    fmanager::validateLeepDay(long year, long month, long day)
-{ 
-    int maxDays = 28;
+btc::btc( string& fileName ) : _fileName(fileName)
+{
+    fillDataBase();
+    
+    fillInputData();
+}
 
-    if (year % 4 == 0) {
-        if (year % 100 != 0 || year % 400 == 0) {
-            maxDays = 29;
+
+
+btc::btc(btc& other) : _fileName(other.getFileName()) {
+    *this = other;
+}
+
+btc&      btc::operator=( btc& other) {
+    if (this == &other)
+        return *this;
+    
+    this->_m_dataBase = other.getDB();
+    this->_fileName = other.getFileName();
+    this->_m_inputData = other.getInputData();
+
+    return *this;
+}
+
+btc::~btc() {}
+
+void    btc::fillInputData()
+{
+    fillInputData(_fileName);
+}
+
+void    btc::fillInputData(string& fileName)
+{
+    fmanager file;
+    _fileName = fileName;
+
+
+    file.openFile(_fileName);
+    while (true)
+    {
+        try
+        {
+            LineResult res = file.getNextLine('|');
+            if ( !res.found)
+                break;
+            if ( res.price < 0 || res.price > 1000 )
+                throw std::runtime_error("Error in value:  value out of range !!");
+            calculePrice(res);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
         }
     }
-
-    if (day > maxDays) 
-        throw std::runtime_error("Error in Date:\n  day not exist in February  !!");
-
 }
 
-void    fmanager::validateDate(std::string& date)    
+void    btc::fillDataBase()
 {
-    if (date.length() != 10 || date[4] != '-' || date[7] != '-')
-        throw std::runtime_error("Error in Date:\n  Invalid Date !!");
+    fmanager f_DB;
+    f_DB.openFile("data.csv");
 
-    std::string yearStr = date.substr(0, 4);
-    std::string monthStr = date.substr(5, 2);
-    std::string dayStr = date.substr(8, 2);
-
-    char *end;
-    
-    long year = std::strtol(yearStr.c_str(), &end, 10);
-    if (*end != '\0' || year < 2008)
-        throw std::runtime_error("Error in Date:\n  Invalid year !!");
-
-    long month = std::strtol(monthStr.c_str(), &end, 10);
-    if (*end != '\0' || month < 1 || month > 12)
-        throw std::runtime_error("Error in Date:\n  Invalid month !!");
-
-    long day = std::strtol(dayStr.c_str(), &end, 10);
-    if (*end != '\0' || day < 1 || day > 31)
-        throw std::runtime_error("Error in Date:\n  Invalid day !!");
-
-    if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
-        throw std::runtime_error("Error in Date:\n  day not exist in this month !!");
-
-    if ( month == 2 )
-        validateLeepDay(year, month, day);
-
-}
-
-void    fmanager::validateValue(std::string& value)    
-{
-
-}
-
-std::pair<std::string, float>    fmanager::parseLine(std::string& date,std::string& value)
-{
-    validateDate(date);
-    validateValue(value);
-    
-}
-
-std::pair<std::string, float>   fmanager::getNextLine()
-{
-    std::string date;
-    std::string value;
-    if (std::getline(*_file, date, ','))
+    while (true)
     {
-        if (std::getline(*_file, value))
-            return parseLine(date, value);
+        LineResult res = f_DB.getNextLine(',');
+        if ( !res.found)
+            break;
+        _m_dataBase[res.date] = res.price;
     }
-    throw std::runtime_error("cannot read from file");
 }
 
-
-
-btc::btc(const std::string& fileName) : _fileName(fileName)
+void    printResute(LineResult res, float resulte)
 {
-    fmanager dataBase;
-    dataBase.openFile("data.csv");
-
+    std::cout << res.date << " ==> " << res.price << " = " << resulte << std::endl ;
 }
 
+void    btc::calculePrice(LineResult res)
+{
+    Map::iterator it_DB = _m_dataBase.lower_bound(res.date);
+
+    float result = res.price * it_DB->second;
+    printResute(res, result);
+}
+
+Map         btc::getDB() { return (this->_m_dataBase); }
+Map         btc::getInputData() { return (this->_m_inputData) ;};
+string&     btc::getFileName() { return (this->_fileName); }

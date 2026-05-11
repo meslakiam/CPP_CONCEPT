@@ -26,6 +26,25 @@ PmergeMe::PmergeMe(std::vector<std::string> v_str)
     }
 }
 
+
+PmergeMe::PmergeMe(PmergeMe& other)
+{
+    this->_v_nums = other._v_nums;
+    this->_dq_nums = other._dq_nums;
+}
+PmergeMe&   PmergeMe::operator=(PmergeMe& other)
+{
+    if ( this == &other )
+        return *this;
+    
+    this->_v_nums = other._v_nums;
+    this->_dq_nums = other._dq_nums;
+
+    return *this;
+}
+
+PmergeMe::~PmergeMe() {}
+
 void print(std::vector<Int> v)
 {
     std::cout << "\n------------------------------\n";

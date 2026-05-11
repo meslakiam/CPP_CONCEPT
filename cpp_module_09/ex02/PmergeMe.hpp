@@ -67,6 +67,9 @@ class PmergeMe {
         PmergeMe(std::vector<std::string> v_str);
         PmergeMe(std::deque<std::string>  dq_str);
         PmergeMe();
+        PmergeMe(PmergeMe& other);
+        PmergeMe&   operator=(PmergeMe& other);
+        ~PmergeMe();
     
         void    algorithm(std::vector<Int>& v_largeNums);
         void    sort(std::vector<Int>& _v_nums);
