@@ -56,6 +56,7 @@ class PmergeMe {
     void    insertion(std::vector<Int>& v_largeNums, std::vector<Int>& v_smallNums);
     void    orderedThePair(std::vector<Int>& v_largeNums, std::vector<Int>& v_smallNums, std::vector<Int>& v_orderedPaire);
     void    mapThePairs(std::vector<Int>& v_largeNums, std::vector<Int>& v_smallNums);
+    void    popIndexes(std::vector<Int>& v_largeNums);
 
 
     void    PairwiseComparison(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smallNums);
@@ -97,5 +98,4 @@ struct HasSameIndex
     {
         return ( ( !(obj.index.empty() ) && (obj.index.back() == target) ) ) ;
     }
-
 };
