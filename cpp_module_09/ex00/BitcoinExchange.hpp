@@ -29,8 +29,8 @@ class btc {
         
         ~btc();
 
-        void    fillInputData();
-        void    fillInputData(string& fileName);
+        void    runExchange();
+        void    runExchange(string& fileName);
 
         void    calculePrice(LineResult res);
 

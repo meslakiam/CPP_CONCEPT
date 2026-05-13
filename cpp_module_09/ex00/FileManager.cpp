@@ -2,29 +2,28 @@
 
 bool fmanager::_s_first_time = true;
 
-LineResult::LineResult() : found(false), date(""), price(0.0f) {}
+LineResult::LineResult() : found(false), date(""), priceStr(""), price(0.0f) {}
 
 fmanager::fmanager() : _file() { _s_first_time = true; }
 
-fmanager::fmanager(fmanager& other) : _file() {
+fmanager::fmanager(fmanager& other) : _file()
+{
     *this = other;
     _s_first_time = true;
 }
 
 fmanager& fmanager::operator=(fmanager& other) {
     (void)other;
-    if (this != &other) {
-        if (this->_file.is_open()) {
-            this->_file.close();
-        }
+    if (this != &other)
+    {
+        closeFile();
     }
     return *this;
 }
 
-fmanager::~fmanager() {
-    if (this->_file.is_open()) {
-        this->_file.close();
-    }
+fmanager::~fmanager()
+{
+    closeFile();
 }
 void fmanager::trim(std::string& s) {
     const std::string whitespace = " \t\n\r\f\v";
@@ -40,6 +39,18 @@ void fmanager::trim(std::string& s) {
     s = s.substr(start, end - start + 1);
 }
 
+string fmanager::printError(string errorMsg, string errorValue , string errorMsg2 )
+{
+    string  str;
+
+    str = errorMsg;
+    if (!errorValue.empty())
+        str += ": " + errorValue ;
+    if (!errorMsg2.empty())
+        str += " " + errorMsg2;
+
+    return str;
+} 
 void     fmanager::openFile(std::string fileName)
 {
     if (_file.is_open())
@@ -47,10 +58,10 @@ void     fmanager::openFile(std::string fileName)
     
     _file.open(fileName.c_str());
     if (!_file.is_open())
-        throw std::runtime_error("cannot open file");
+        throw std::runtime_error(printError("cannot open file", fileName));
 }
 
-void    fmanager::validateLeepDay(long year, long day)
+void    fmanager::validateLeepDay(long year, long day, string dayStr)
 { 
     int maxDays = 28;
 
@@ -61,37 +72,37 @@ void    fmanager::validateLeepDay(long year, long day)
     }
 
     if (day > maxDays) 
-        throw std::runtime_error("Error in Date:  day not exist in February  !!");
+        throw std::runtime_error(printError("Error in Date", dayStr, "does not exist in this month."));
 
 }
 
 void    fmanager::validateDate(std::string& date)    
 {
     if (date.length() != 10 || date[4] != '-' || date[7] != '-')
-        throw std::runtime_error("Error in Date:  Invalid Date !!");
+        throw std::runtime_error(printError("Error in Date", date, "bad input."));
 
-    std::string yearStr = date.substr(0, 4);
-    std::string monthStr = date.substr(5, 2);
-    std::string dayStr = date.substr(8, 2);
+    string yearStr = date.substr(0, 4);
+    string monthStr = date.substr(5, 2);
+    string dayStr = date.substr(8, 2);
 
     char *end;
     long year = std::strtol(yearStr.c_str(), &end, 10);
     if (*end != '\0' || year < 2008 || year > 2147483647)
-        throw std::runtime_error("Error in Date:  Invalid year !!");
+        throw std::runtime_error(printError("Error in Date", yearStr, "not a valid year."));
 
     long month = std::strtol(monthStr.c_str(), &end, 10);
     if (*end != '\0' || month < 1 || month > 12)
-        throw std::runtime_error("Error in Date:  Invalid month !!");
+        throw std::runtime_error(printError("Error in Date", monthStr, "not a valid month."));
 
     long day = std::strtol(dayStr.c_str(), &end, 10);
     if (*end != '\0' || day < 1 || day > 31)
-        throw std::runtime_error("Error in Date:  Invalid day !!");
+        throw std::runtime_error(printError("Error in Date", dayStr, "not a valid day."));
 
     if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
-        throw std::runtime_error("Error in Date:  day not exist in this month !!");
+        throw std::runtime_error(printError("Error in Date", dayStr, "does not exist in this month."));
 
     if ( month == 2 )
-        validateLeepDay(year, day);
+        validateLeepDay(year, day, dayStr);
 
 }
 
@@ -99,8 +110,10 @@ float    fmanager::validateValue(std::string& value)
 {
     char *end;
     float n = std::strtof(value.c_str(), &end);
-    if ( *end != '\0' || n < 0 )
-        throw std::runtime_error("Error in value: value not a number !!");
+    if ( *end != '\0' )
+        throw std::runtime_error(printError("Error in value", value, "not a valid number."));
+    if ( n < 0 )
+        throw std::runtime_error(printError("Error in value", value, " not a positive number."));
     return ( n );
 }
 
@@ -108,45 +121,65 @@ float fmanager::parseLine(std::string& date,std::string& value)
 {
     trim(date);
     trim(value);
+
     validateDate(date);
+
+    if ( value.empty() )
+        throw std::runtime_error(printError("Error in value: there is no value at date ", date, "."));
+
     float num = validateValue(value);
 
     return ( num );
 }
 
-LineResult  fmanager::getNextLine(string first_arg, string second_arg, char del)
+bool    fmanager::ReadLine(string& date, string& value)
 {
-    std::string date;
-    std::string value;
-    LineResult res;
+    string      line;
+    if (std::getline(_file, line))
+    {
+        size_t pos = line.find(_del);
+        
+        if (pos != std::string::npos)
+        {
+            date = line.substr(0, pos);
+            value = line.substr(pos + 1);
+            return true;
+        }
+        else
+            throw std::runtime_error(printError("Error in value: there is no value at date ", line, "."));
+    }
+    return false;
+}
+LineResult  fmanager::getNextLine( char del )
+{
+    string      date;
+    string      value;
+    LineResult  res;
 
+    _del = del;
     if (_s_first_time)
     {
-        string sec;
         _s_first_time = false;
-
-        std::getline(_file, value, del);
-        std::getline(_file, sec);
-        trim(value);
-        trim(sec);
-
-        if ( value != first_arg)
-            throw std::runtime_error("Error in first line !!");
-        if ( sec != second_arg)
-            throw std::runtime_error("Error in first line !!");
+        std::getline(_file, value);
     }
 
-    if (std::getline(_file, date, del))
+    if (ReadLine(date, value))
     {
-        if (std::getline(_file, value))
-        {
-            res.price = parseLine(date, value);
-            res.date = date;
-            res.found = true;
-            return res;
-        }
-        throw std::runtime_error("Error in value: there is no value !!");
+        res.price = parseLine(date, value);
+        res.priceStr = value;
+        res.date = date;
+        res.found = true;
+
+        return res;
     }
     res.price = 0;
     return res;
+}
+
+void    fmanager::closeFile()
+{
+    if (this->_file.is_open())
+    {
+        this->_file.close();
+    }
 }

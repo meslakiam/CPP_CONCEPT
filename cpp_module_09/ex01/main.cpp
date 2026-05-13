@@ -3,32 +3,24 @@
 
 int main(int argc, char const *argv[])
 {
-    if ( argc < 2)
-        return 0;
+    if ( argc == 2)
+    {
+        string args;
+        args = argv[1]; 
+        try
+        {
+            RPN expressions;
 
-    std::list<string> l_args;
-    for (int i = 1; i < argc; i++)
-        l_args.push_back(argv[i]);
-    std::cout << "\n---------------------------\n" ;
-    for (List::iterator i = l_args.begin(); i != l_args.end(); i++)
-    {
-        std::cout << *i << " " ;
+            long res = expressions.evaluateRPN(args);
+            std::cout << res << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
     }
-    std::cout << "\n---------------------------\n" ;
-    
-    
-    try
-    {
-        RPN expressions;
-
-        long n = expressions.evaluateRPN(l_args);
-        std::cout << "resulte = " << n << std::endl;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-        
+    else
+        std::cout << "Error:\n   bad input" << std::endl ;
     
     return 0;
 }

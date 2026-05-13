@@ -215,7 +215,7 @@ int main(int argc, char const *argv[])
     }
     catch(const std::exception& e)
     {
-        std::cerr << "Error:\n" <<  e.what() << '\n';
+        std::cerr << "Error:\n" <<  e.what() << std::endl;
     }
 
     return 0;

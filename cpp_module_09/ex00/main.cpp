@@ -8,11 +8,12 @@ int main(int argc, char const *argv[])
         try
         {
             string arg = argv[1];
-            btc bitcoin(arg);
+            btc bitcoin;
+            bitcoin.runExchange(arg);
         }
         catch(const std::exception& e)
         {
-            std::cerr << e.what() << '\n';
+            std::cerr << e.what() << std::endl;
         }
     }
     else

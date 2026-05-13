@@ -8,17 +8,17 @@ btc::btc()
 btc::btc( string& fileName ) : _fileName(fileName)
 {
     fillDataBase();
-    
-    fillInputData();
+
+    runExchange();
 }
 
-
-
-btc::btc(btc& other) : _fileName(other.getFileName()) {
+btc::btc(btc& other) : _fileName(other.getFileName())
+{
     *this = other;
 }
 
-btc&      btc::operator=( btc& other) {
+btc&      btc::operator=( btc& other)
+{
     if (this == &other)
         return *this;
     
@@ -31,16 +31,15 @@ btc&      btc::operator=( btc& other) {
 
 btc::~btc() {}
 
-void    btc::fillInputData()
+void    btc::runExchange()
 {
-    fillInputData(_fileName);
+    runExchange(_fileName);
 }
 
-void    btc::fillInputData(string& fileName)
+void    btc::runExchange(string& fileName)
 {
     fmanager file;
     _fileName = fileName;
-
 
     file.openFile(_fileName);
     while (true)
@@ -51,12 +50,12 @@ void    btc::fillInputData(string& fileName)
             if ( !res.found)
                 break;
             if ( res.price < 0 || res.price > 1000 )
-                throw std::runtime_error("Error in value:  value out of range !!");
+                throw std::runtime_error(fmanager::printError( "Error in value", res.priceStr, "too large a number."));
             calculePrice(res);
         }
         catch(const std::exception& e)
         {
-            std::cerr << e.what() << '\n';
+            std::cerr << e.what() << std::endl;
         }
     }
 }
@@ -82,8 +81,9 @@ void    printResute(LineResult res, float resulte)
 
 void    btc::calculePrice(LineResult res)
 {
-    Map::iterator it_DB = _m_dataBase.lower_bound(res.date);
+    Map::iterator it_DB = _m_dataBase.upper_bound(res.date);
 
+    it_DB--;
     float result = res.price * it_DB->second;
     printResute(res, result);
 }

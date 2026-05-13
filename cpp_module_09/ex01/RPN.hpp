@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <bits/stdc++.h>
+#include <sstream>
 #include <list>
 #include <stack>
 
@@ -24,23 +25,25 @@ class RPN {
     List    _l_tokens;
     Stack   _s_calculationStack;
     long    _resulte;
+    string  _inputString;
 
-    
-    // RPN(string data);
-    RPN(RPN& other);
-    RPN& operator=(RPN& other);
+    RPN(const RPN& other);
+    RPN& operator=(const RPN& other);
 
     string  printError(string errorMsg, string errorValue = "" , string errorMsg2 = "" );
+    List    splitTokens(string& s);
     Token   identifyToken(string& token);
     long    calculate(long& num1, long& num2, string& op);
     
     public:
         RPN();
-        RPN(List l_inputs);
+        RPN(string input);
         ~RPN();
 
-        long    evaluateRPN(List l_inputs);
-        long    getResulte();
+        long    evaluateRPN(string input);
+        long    evaluateRPN();
+        long&    getResulte();
 
 };
+
 #endif
