@@ -1,6 +1,6 @@
 #include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe(std::deque<std::string>  dq_str)
+PmergeMe::PmergeMe(std::deque<std::string> dq_str)
 {
     for (size_t i = 0; i < dq_str.size(); i++)
     {
@@ -21,38 +21,18 @@ PmergeMe::PmergeMe(std::deque<std::string>  dq_str)
     }
 }
 
-void PmergeMe::sort(std::deque<Int>&  _dq_nums)
+void PmergeMe::sort(std::deque<Int>& nums)
 {
-    if (_dq_nums.empty())
+    if (nums.empty())
         return;
 
-    algorithm(_dq_nums);
-}
-
-void PmergeMe::algorithm(std::deque<Int>& dq_largeNums)
-{
-    std::deque<Int> dq_smallNums;
-    
-    if (dq_largeNums.size() == 1)
-        return;
-
-    PairwiseComparison(dq_largeNums, dq_smallNums);
-    mapThePairs(dq_largeNums, dq_smallNums);
-
-    algorithm(dq_largeNums);
-
-    insertion(dq_largeNums, dq_smallNums);
-    for (size_t i = 0; i < dq_largeNums.size(); i++)
-    {
-        if (!dq_largeNums[i].index.empty())
-            dq_largeNums[i].index.pop_back();
-    }
-
+    algorithm(nums);
+    _dq_nums = nums;
 }
 
 void PmergeMe::PairwiseComparison(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smallNums)
 {
-    std::deque<Int> v_tmpNumbers;
+    std::deque<Int> dq_tmpNumbers;
     for (size_t i = 0; i < dq_largeNums.size(); i += 2)
     {
         if (i == dq_largeNums.size() - 1)
@@ -62,18 +42,17 @@ void PmergeMe::PairwiseComparison(std::deque<Int>& dq_largeNums, std::deque<Int>
         }
         if (dq_largeNums[i] < dq_largeNums[i + 1])
         {
-            v_tmpNumbers.push_back(dq_largeNums[i + 1]);
+            dq_tmpNumbers.push_back(dq_largeNums[i + 1]);
             dq_smallNums.push_back(dq_largeNums[i]);
         }
         else
         {
-            v_tmpNumbers.push_back(dq_largeNums[i]);
+            dq_tmpNumbers.push_back(dq_largeNums[i]);
             dq_smallNums.push_back(dq_largeNums[i + 1]);
         }
     }
-    dq_largeNums = v_tmpNumbers;
+    dq_largeNums = dq_tmpNumbers;
 }
-
 
 void PmergeMe::mapThePairs(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smallNums)
 {
@@ -100,11 +79,8 @@ void PmergeMe::orderedThePair(std::deque<Int>& dq_largeNums, std::deque<Int>& dq
     {
         dq_smallOrderedPaire.push_back(dq_smallNums.back());
         dq_smallNums.erase(dq_smallNums.end() - 1);
-
     }
-
 }
-
 
 void PmergeMe::insertion(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smallNums)
 {
@@ -117,8 +93,7 @@ void PmergeMe::insertion(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smal
 
     std::vector<int> jacob = JacobSequenceIndexes(dq_largeNums.size());
 
-
-    int prevJacob = 0;
+    int prevJacob = 0; 
 
     for (int i = 0; i < (int)jacob.size(); i++)
     {
@@ -129,7 +104,6 @@ void PmergeMe::insertion(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smal
         for (int j = prevJacob; j < curr; j++)
             dq_mainChain.push_back(dq_largeNums[j]);
 
-        // Walk backwards inserting b's with lower_bound up to paired a
         for (int j = curr ; j > prevJacob; j--)
         {
             if (j == 0)
@@ -144,11 +118,9 @@ void PmergeMe::insertion(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smal
         prevJacob = curr;
     }
 
-    // Push remaining a's FREE (not covered by jacob)
     for (int j = prevJacob; j < (int)dq_largeNums.size(); j++)
         dq_mainChain.push_back(dq_largeNums[j]);
 
-    // Insert remaining b's
     for (int j = prevJacob + 1; j < (int)dq_smallOrderedPaire.size(); j++)
     {
         if (j == 0)
@@ -159,10 +131,34 @@ void PmergeMe::insertion(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smal
         dq_mainChain.insert(it, dq_smallOrderedPaire[j]);
     }
 
-    
-
     dq_largeNums.clear();
     dq_largeNums = dq_mainChain;
+}
+
+void    PmergeMe::popIndexes(std::deque<Int>& dq_largeNums)
+{
+    for (size_t i = 0; i < dq_largeNums.size(); i++)
+    {
+        if (!dq_largeNums[i].index.empty())
+            dq_largeNums[i].index.pop_back();
+    }
+}
+
+void PmergeMe::algorithm(std::deque<Int>& dq_largeNums)
+{
+    std::deque<Int> dq_smallNums;
+    
+    if (dq_largeNums.size() == 1)
+        return;
+
+    PairwiseComparison(dq_largeNums, dq_smallNums);
+    mapThePairs(dq_largeNums, dq_smallNums);
+
+    algorithm(dq_largeNums);
+
+    insertion(dq_largeNums, dq_smallNums);
+    popIndexes(dq_largeNums);
+
 }
 
 std::deque<Int>& PmergeMe::getDequeNums()
@@ -172,6 +168,6 @@ std::deque<Int>& PmergeMe::getDequeNums()
 
 void PmergeMe::setNums(std::deque<Int>& dq_args)
 {
-    _dq_nums  = dq_args;
+    _dq_nums = dq_args;
 }
 

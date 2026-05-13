@@ -13,6 +13,10 @@
 #include <fstream>
 #include <unistd.h>
 
+
+
+
+
 template <typename ForwardIterator>
 bool isSorted(ForwardIterator first, ForwardIterator last)
 {
@@ -150,6 +154,26 @@ void GeneralTest(int numberOfItems, int numberOfTests = 1000000, int skip = 0)
 	}
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void	printResulte(std::deque<Int>& _dq_nums, std::string str)
 {
 	std::cout << str << ": " ;
@@ -170,9 +194,9 @@ void	printResulte(std::vector<Int>& _v_nums, std::string str)
 	}
 	std::cout << std::endl;
 }
+
 int main(int argc, char const *argv[])
 {
-
     if ( argc <= 1 )
     {
         std::cout << "there is no numbers to sort !!\n";
@@ -184,33 +208,35 @@ int main(int argc, char const *argv[])
         v_args.push_back(argv[i]);
     try
     {
-        int n = 10;
-		GeneralTest(n, 1000000, 10);
-	// 	std::deque<std::string> dq_args(v_args.begin(), v_args.end());
+		// int n = 10;
+		// GeneralTest(n, 1000, 10);
+		std::deque<std::string> dq_args(v_args.begin(), v_args.end());
 
-    //     PmergeMe	v_algo(v_args);
+		std::cout << "\n==================================================\n";
+        PmergeMe	v_algo(v_args);
 	
-	// 	std::cout << "\n==================================================\n";
-	// 	printResulte(v_algo.getVectorNums(), "vector befor");
-	// 	v_algo.initTime();
+		printResulte(v_algo.getVectorNums(), "vector befor");
+		v_algo.initTime();
 
-    //     v_algo.sort(v_algo.getVectorNums());
+        v_algo.sort(v_algo.getVectorNums());
 	
-	// 	printResulte(v_algo.getVectorNums(), "vector after");
-	// 	std::cout << "time of sorting a vector = " << v_algo.timeOfSorting() << "ms\n";
+		printResulte(v_algo.getVectorNums(), "vector after");
+		std::cout << "time of sorting a vector = " << v_algo.timeOfSorting() << "ms\n";
 
-	// 	std::cout << "\n==================================================\n\n";
-	// 	PmergeMe	dq_algo(dq_args);
+		std::cout << "\n==================================================\n\n";
 
-	// 	v_algo.initTime();
+		std::cout << "\n==================================================\n";
+		PmergeMe	dq_algo(dq_args);
 
-	// 	printResulte(dq_algo.getDequeNums(), "deque befor");
+		v_algo.initTime();
 
-	// 	dq_algo.sort(dq_algo.getDequeNums());
+		printResulte(dq_algo.getDequeNums(), "deque befor");
 
-	// 	printResulte(dq_algo.getDequeNums(), "deque after");
-	// 	std::cout << "time of sorting a deque = " << v_algo.timeOfSorting() << "ms\n";
-	// 	std::cout << "\n==================================================\n";
+		dq_algo.sort(dq_algo.getDequeNums());
+
+		printResulte(dq_algo.getDequeNums(), "deque after");
+		std::cout << "time of sorting a deque = " << v_algo.timeOfSorting() << "ms\n";
+		std::cout << "\n==================================================\n";
  
     }
     catch(const std::exception& e)

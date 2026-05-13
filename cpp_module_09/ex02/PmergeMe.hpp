@@ -39,7 +39,6 @@ struct Int
     {
         return value == i.value;
     }
-
 };
 
 std::ostream&    operator<<(std::ostream& os, Int& obj);
@@ -63,6 +62,7 @@ class PmergeMe {
     void    mapThePairs(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smallNums);
     void    orderedThePair(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smallNums, std::deque<Int>& dq_smallOrderedPaire);
     void    insertion(std::deque<Int>& dq_largeNums, std::deque<Int>& dq_smallNums);
+    void    popIndexes(std::deque<Int>& dq_largeNums);
 
     public:
         PmergeMe(std::vector<std::string> v_str);
