@@ -19,7 +19,6 @@ struct Token
     Token();
 };
 
-
 class RPN {
 
     List    _l_tokens;

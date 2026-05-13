@@ -73,7 +73,11 @@ long RPN::calculate(long& num1, long& num2, string& op)
     else if ( op == "*")
         res = num1 * num2;
     else if ( op == "/")
+    {
+        if ( num2 == 0 )
+            throw   std::runtime_error(printError("Error:\n   invalid division by 0"));
         res = num1 / num2;
+    }
     else
         throw   std::runtime_error(printError("Error:\n   invalid operator", op));
 
@@ -121,7 +125,6 @@ long    RPN::evaluateRPN(string inputs)
         
             long num1 = _s_calculationStack.top();
             _s_calculationStack.pop();
-     
 
             _resulte = calculate(num1, num2, t_currentToken.Operator);
             _s_calculationStack.push(_resulte);
